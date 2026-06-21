@@ -40,7 +40,7 @@ Single HTML file. Vanilla JS. No build step. No dependencies.
 - Mesh: `BroadcastChannel('fall-claim')` for client/adviser/firm/case sync, `case.settled` listener, `fee.recorded`/`escrow.entry`/`complaint.recorded` emitters
 - `BroadcastChannel('fall-signal')` for the wider estate
 - T0 rules engine for offline answers. BYOK Anthropic/Gemini/OpenAI/OpenRouter for grounded answers.
-- Mansoor P3 audit chain — every state change appends `{i, ts, prevHash, docHash, hash}`. Exportable JSON. 6 years retention per FCA CMR.
+- P3 audit chain — every state change appends `{i, ts, prevHash, docHash, hash}`. Exportable JSON. 6 years retention per FCA CMR.
 
 ### Window globals
 
