@@ -161,22 +161,19 @@ tr.clickable:hover td{background:var(--ink)}
     'llama-3b':  { id: 'Llama-3.2-3B-Instruct-q4f16_1-MLC',   size: '~2GB',   label: '3B · balanced · default · most laptops' },
     'qwen-7b':   { id: 'Qwen2.5-7B-Instruct-q4f16_1-MLC',     size: '~5GB',   label: '7B · capable · needs decent GPU (M-series Mac / 8GB+ VRAM)' },
     'llama-8b':  { id: 'Llama-3.1-8B-Instruct-q4f16_1-MLC',   size: '~5GB',   label: '8B · common · needs decent GPU' },
-    'llama-70b': { id: 'Llama-3.1-70B-Instruct-q4f16_1-MLC',  size: '~40GB',  label: '70B · frontier · needs serious GPU + 64GB+ RAM' },
-  };
+    'llama-70b': { id: 'Llama-3.1-70B-Instruct-q4f16_1-MLC',  size: '~40GB',  label: '70B · frontier · needs serious GPU + 64GB+ RAM' }};
   const DEFAULT_MODEL = 'llama-3b';
 
   const T3_PROVIDERS = {
     anthropic: { label: 'Anthropic Claude', models: ['claude-sonnet-4-5','claude-opus-4-7','claude-haiku-4-5'], default: 'claude-sonnet-4-5', url: 'https://api.anthropic.com/v1/messages' },
     openai:    { label: 'OpenAI',           models: ['gpt-4o','gpt-4o-mini','o1-mini'],                          default: 'gpt-4o-mini',      url: 'https://api.openai.com/v1/chat/completions' },
-    google:    { label: 'Google Gemini',    models: ['gemini-1.5-pro','gemini-1.5-flash','gemini-2.0-flash-exp'], default: 'gemini-1.5-flash', url: 'https://generativelanguage.googleapis.com/v1beta/models/' },
-  };
+    google:    { label: 'Google Gemini',    models: ['gemini-1.5-pro','gemini-1.5-flash','gemini-2.0-flash-exp'], default: 'gemini-1.5-flash', url: 'https://generativelanguage.googleapis.com/v1beta/models/' }};
 
   // ─── State ───────────────────────────────────────────────────────
   const STATE = {
     config: loadConfig(),
     ai: { ready: false, loading: false, progress: 0, engine: null, model: null },
-    mesh: { active: false, peers: new Map(), bc: null, signal: null },
-  };
+    mesh: { active: false, peers: new Map(), bc: null, signal: null }};
 
   function loadConfig() {
     try { return JSON.parse(localStorage.getItem('fall-kit.config') || '{}'); }
@@ -243,8 +240,7 @@ tr.clickable:hover td{background:var(--ink)}
     if (tier === 'T2' && STATE.ai.ready && STATE.ai.engine) {
       const r = await STATE.ai.engine.chat.completions.create({
         messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: userMsg }],
-        max_tokens: maxTokens,
-      });
+        max_tokens: maxTokens});
       return r.choices[0].message.content;
     }
     if (tier === 'T3' && STATE.config.api_key && STATE.config.api_provider) {
@@ -261,8 +257,7 @@ tr.clickable:hover td{background:var(--ink)}
       const r = await fetch(T3_PROVIDERS.anthropic.url, {
         method: 'POST',
         headers: { 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01' },
-        body: JSON.stringify({ model, max_tokens: maxTokens, system: sys, messages: [{ role: 'user', content: msg }] }),
-      });
+        body: JSON.stringify({ model, max_tokens: maxTokens, system: sys, messages: [{ role: 'user', content: msg }] })});
       if (!r.ok) throw new Error('Anthropic ' + r.status + ': ' + (await r.text()).slice(0, 200));
       const j = await r.json();
       return j.content[0].text;
@@ -271,8 +266,7 @@ tr.clickable:hover td{background:var(--ink)}
       const r = await fetch(T3_PROVIDERS.openai.url, {
         method: 'POST',
         headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + key },
-        body: JSON.stringify({ model, max_tokens: maxTokens, messages: [{ role: 'system', content: sys }, { role: 'user', content: msg }] }),
-      });
+        body: JSON.stringify({ model, max_tokens: maxTokens, messages: [{ role: 'system', content: sys }, { role: 'user', content: msg }] })});
       if (!r.ok) throw new Error('OpenAI ' + r.status);
       const j = await r.json();
       return j.choices[0].message.content;
@@ -281,8 +275,7 @@ tr.clickable:hover td{background:var(--ink)}
       const r = await fetch(T3_PROVIDERS.google.url + model + ':generateContent?key=' + encodeURIComponent(key), {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: sys + '\n\n---\n\n' + msg }] }], generationConfig: { maxOutputTokens: maxTokens } }),
-      });
+        body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: sys + '\n\n---\n\n' + msg }] }], generationConfig: { maxOutputTokens: maxTokens } })});
       if (!r.ok) throw new Error('Google ' + r.status);
       const j = await r.json();
       return j.candidates[0].content.parts[0].text;
@@ -523,8 +516,7 @@ tr.clickable:hover td{background:var(--ink)}
     openMint: openMint,  // v1.2 · launch kcc-mint with this seed prefilled as parent
     MODELS: WEBLLM_MODELS,
     PROVIDERS: T3_PROVIDERS,
-    state: STATE,
-  };
+    state: STATE};
 })(typeof window !== 'undefined' ? window : globalThis);
 
 </script>
@@ -594,8 +586,7 @@ const RULES={
  piiAmberDays:60, piiRedDays:30,
  rmarCMRFreqMonths:6, rmarLatePenalty:250,
  invoiceTermsDays:14,
- limitationPiYears:3, limitationContractYears:6,
-};
+ limitationPiYears:3, limitationContractYears:6};
 
 const TABS=[
  {id:'dashboard',label:'◊ dashboard'},
@@ -611,8 +602,7 @@ const TABS=[
  {id:'firm-pl',label:'firm P&L'},
  {id:'expenses',label:'expenses'},
  {id:'cmr',label:'CMR · RegData'},
- {id:'qa',label:'Q&A'},
-];
+ {id:'qa',label:'Q&A'}];
 
 let state={
  active:'dashboard',
@@ -629,9 +619,7 @@ let state={
  piiAnnualPremium:0, cmrAnnualFee:1500, cmrIncomeBand:'medium',
  profBodyAnnual:0, bankDetails:'',
  firmRegulation:'cmr',
- demoLoaded:false,
- },
-};
+ demoLoaded:false}};
 
 const $=(s,p=document)=>p.querySelector(s);
 const $$=(s,p=document)=>Array.from(p.querySelectorAll(s));
@@ -729,8 +717,7 @@ async function maybeSeedDemo(){
  const escrowDemo=[
  {id:'es_'+uid(),caseId:cs.id,clientId:cl.id,ts:now()-40*dayMs,dateOf:isoDate(now()-40*dayMs),type:'in',amount:5000,source:'Interim damages payment · Aviva',reconciledAt:now()-38*dayMs,notes:'Held pending medical evidence completion',demo:true},
  {id:'es_'+uid(),caseId:cs.id,clientId:cl.id,ts:now()-22*dayMs,dateOf:isoDate(now()-22*dayMs),type:'out',amount:285,source:'ATE premium paid to ARAG',reconciledAt:now()-22*dayMs,notes:'',demo:true},
- {id:'es_'+uid(),caseId:cs.id,clientId:cl.id,ts:now()-3*dayMs,dateOf:isoDate(now()-3*dayMs),type:'reconciliation',amount:0,source:'Monthly reconciliation',reconciledAt:now()-3*dayMs,notes:'All entries reconcile to bank balance',demo:true},
- ];
+ {id:'es_'+uid(),caseId:cs.id,clientId:cl.id,ts:now()-3*dayMs,dateOf:isoDate(now()-3*dayMs),type:'reconciliation',amount:0,source:'Monthly reconciliation',reconciledAt:now()-3*dayMs,notes:'All entries reconcile to bank balance',demo:true}];
  for(const e of escrowDemo){state.escrow.push(e);await idbPut('escrow',e)}
  // ATE policy
  const ate={id:'at_'+uid(),caseId:cs.id,clientId:cl.id,insurer:'ARAG',policyNo:'ARG-RTA-118822',premium:285,coverageAmount:25000,claimStatus:'active',purchasedAt:now()-100*dayMs,recoveredAt:null,recoveryAmount:0,notes:'Standard PI cover · post-LASPO non-recoverable',demo:true};
@@ -748,8 +735,7 @@ async function maybeSeedDemo(){
  const feeDemo=[
  {id:'fr_'+uid(),caseId:cs.id,clientId:cl.id,adviserId:adv.id,firmId,ts:now()-80*dayMs,dateOf:isoDate(now()-80*dayMs),arrangement:'cfa',type:'time-recorded',basis:'hourly',hours:4.5,hourlyRate:220,description:'Initial intake · CFA + ATE setup · portal CNF',gross:990,vat:0,net:990,status:'wip',realisedAt:null,allocations:[{adviserId:adv.id,share:1.0}],demo:true},
  {id:'fr_'+uid(),caseId:cs.id,clientId:cl.id,adviserId:adv.id,firmId,ts:now()-50*dayMs,dateOf:isoDate(now()-50*dayMs),arrangement:'cfa',type:'time-recorded',basis:'hourly',hours:6.0,hourlyRate:220,description:'Liability negotiation · medical evidence gathering',gross:1320,vat:0,net:1320,status:'wip',realisedAt:null,allocations:[{adviserId:adv.id,share:1.0}],demo:true},
- {id:'fr_'+uid(),caseId:cs.id,clientId:cl.id,adviserId:adv.id,firmId,ts:now()-30*dayMs,dateOf:isoDate(now()-30*dayMs),arrangement:'disbursement',type:'disbursement',basis:'fixed',hours:0,hourlyRate:0,description:'Medical report · Dr Patel',gross:450,vat:90,net:540,status:'paid',realisedAt:now()-25*dayMs,allocations:[],demo:true},
- ];
+ {id:'fr_'+uid(),caseId:cs.id,clientId:cl.id,adviserId:adv.id,firmId,ts:now()-30*dayMs,dateOf:isoDate(now()-30*dayMs),arrangement:'disbursement',type:'disbursement',basis:'fixed',hours:0,hourlyRate:0,description:'Medical report · Dr Patel',gross:450,vat:90,net:540,status:'paid',realisedAt:now()-25*dayMs,allocations:[],demo:true}];
  for(const f of feeDemo){state.feeRecords.push(f);await idbPut('feeRecords',f)}
  // success-fee accrual memo for case
  const accr={id:'sa_'+uid(),caseId:cs.id,clientId:cl.id,arrangement:'cfa',wipBase:990+1320,successFeePct:100,damagesEstimate:cs.valuation.totalEstimate,capPct:25,capValue:cs.valuation.totalEstimate*0.25,estimatedAccrual:Math.min((990+1320)*1.0,cs.valuation.totalEstimate*0.25),createdAt:now(),demo:true};
@@ -1020,9 +1006,9 @@ Your firm: ${state.atePolicies.length} ATE policies tracked · total premiums ${
 
 Since April 2019, claims management companies (CMCs) are regulated by the FCA. The annual periodic fee depends on **annual claims-income band**:
 
-- **Small** (<£60k regulated income) · ~${money(RULES.cmrFeeBandSmall)}
-- **Medium** (£60k-£500k) · ~${money(RULES.cmrFeeBandMedium)}
-- **Large** (£500k+) · ${money(RULES.cmrFeeBandLarge)}+ (banded)
+- **Small** (<TBAk regulated income) · ~${money(RULES.cmrFeeBandSmall)}
+- **Medium** (TBA) · ~${money(RULES.cmrFeeBandMedium)}
+- **Large** (TBAk+) · ${money(RULES.cmrFeeBandLarge)}+ (banded)
 - **Minimum** · ${money(RULES.cmrFeeMinimum)}
 
 Invoices issued **July**, due **end August**. FOS levy invoiced separately. SRA-regulated solicitors handling claims pay SRA practising fees instead.
@@ -1077,7 +1063,7 @@ The CMR · RegData tab has a "what to gather" checklist + snapshot export. Submi
 
 **Renewal:** annual; SRA firms must have cover in place by **1 October** each year (the "MTC date"). CMR firms renew on policy anniversary.
 
-**Excess:** typically £2.5k-£25k per claim; must be capitalised if above firm's regulatory capital floor.
+**Excess:** typically TBAk-TBAk per claim; must be capitalised if above firm's regulatory capital floor.
 
 Your firm: ${esc(state.firm?.piiInsurer||'(insurer not set)')} · policy ${esc(state.firm?.piiPolicyNo||'(none)')} · expires ${state.firm?.piiExpiresAt?isoDate(state.firm.piiExpiresAt):'(not set)'} · monthly accrual ${money(piiMonthlyAccrual())}.
 ${piiDaysToExpiry()!==null&&piiDaysToExpiry()<RULES.piiAmberDays?'⚠ Renewal due in '+piiDaysToExpiry()+' days — start the broker conversation now.':''}`},
@@ -1094,15 +1080,15 @@ ${piiDaysToExpiry()!==null&&piiDaysToExpiry()<RULES.piiAmberDays?'⚠ Renewal du
 - FOS reference details
 
 **FOS jurisdiction:**
-- Free for consumer · firm pays **case fee** (~£650 per chargeable case beyond first 3 per year for CMR firms)
-- FOS award limit · **£430,000** (post-Apr 2024)
+- Free for consumer · firm pays **case fee** (~TBA per chargeable case beyond first 3 per year for CMR firms)
+- FOS award limit · **TBA** (post-Apr 2024)
 
 Your firm: ${state.complaintsRegister.length} complaints logged · ${state.complaintsRegister.filter(c=>c.fosEscalated).length} escalated to FOS.`},
  {id:'stale-money',match:/stale.+(money|client)|client.+money.+stale|unclaimed/i,answer:()=>`**Stale client money in escrow:**
 
 Money held >12 months with no instruction or contact is "stale":
 
-**SRA Accounts Rules (firms acting as solicitors)** · Rule 5.1(c) · firm must take "reasonable steps" to return; can pay to charity per AR 5.1(d) after exhausting attempts (with SRA notification if >£500 per residual balance).
+**SRA Accounts Rules (firms acting as solicitors)** · Rule 5.1(c) · firm must take "reasonable steps" to return; can pay to charity per AR 5.1(d) after exhausting attempts (with SRA notification if >TBA per residual balance).
 
 **Non-SRA firms** · less prescriptive but Consumer Duty + FOS expectations apply; document tracing attempts and final disposition.
 
@@ -1128,15 +1114,15 @@ Current quarter VAT collected: ${money(vatTotalQuarter().vat)}. YTD revenue: ${m
  {id:'court-fee',match:/court.+fee|issue.+fee|disbursement/i,answer:()=>`**Court fees + disbursements:**
 
 **Court issue fees (PI/civil money claim, 2025-26):**
-- Up to £300 · £35
-- £300-£500 · £50
-- £500-£1k · £70
-- £1k-£1.5k · £80
-- £1.5k-£3k · £115
-- £3k-£5k · £205
-- £5k-£10k · £455
-- £10k-£200k · **5% of claim** (so £10k claim = £500 · £100k claim = £5,000)
-- Above £200k · £10,000 fixed
+- Up to TBA · TBA
+- TBA-TBA · TBA
+- TBA-TBAk · TBA
+- TBAk-TBAk · TBA
+- TBAk-TBAk · TBA
+- TBA · TBA
+- TBA · TBA
+- TBA · **5% of claim** (so TBAk claim = TBA · TBAk claim = TBA)
+- Above TBAk · TBA fixed
 
 **Treatment:**
 - Pure disbursement when paid to court on client's behalf · **outside VAT** if firm acts as agent
@@ -1171,8 +1157,7 @@ These cases are now rare but **mesothelioma claims** and certain ongoing legacy 
 - Separately invoice the recoverable success fee against the defendant insurer
 - Track receipt separately from post-LASPO success fees
 
-Most modern PI books are 100% post-LASPO. Your firm: 0 pre-2013 CFAs flagged currently.`},
-];
+Most modern PI books are 100% post-LASPO. Your firm: 0 pre-2013 CFAs flagged currently.`}];
 
 async function answerQuestion(q){
  for(const r of T0_RULES){if(r.match.test(q))return{src:'T0 · UK claims rules engine',text:r.answer()}}
@@ -1794,7 +1779,7 @@ function viewQA(){
  </div>
  </div>`;
 }
-function formatBotText(t){return esc(t).replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/`([^`]+)`/g,'<code style="background:var(--ink);padding:1px 5px;border-radius:2px;font-size:11px">$1</code>').replace(/\n/g,'<br>')}
+function formatBotText(t){return esc(t).replace(/\*\*([^*]+)\*\*/g,'<strong>TBA</strong>').replace(/`([^`]+)`/g,'<code style="background:var(--ink);padding:1px 5px;border-radius:2px;font-size:11px">TBA</code>').replace(/\n/g,'<br>')}
 function scrollChatBottom(){const c=$('#chatScroll');if(c)c.scrollTop=c.scrollHeight}
 async function askQA(){
  const inp=$('#qInput');const q=(inp.value||'').trim();if(!q)return;
@@ -1846,8 +1831,7 @@ async function runScheduleCron(){
  invoiceId:'INV-AUTO-'+(state.feeRecords.length+1).toString().padStart(4,'0'),
  realisedAt:null,
  allocations:[{adviserId:s.adviserId,share:1.0}],
- scheduleId:s.id,
- };
+ scheduleId:s.id};
  state.feeRecords.push(fee);await idbPut('feeRecords',fee);
  generated++;
  s.nextDueAt=advanceDate(s.nextDueAt,s.frequency);
@@ -2097,7 +2081,7 @@ function settingsForm(){
  </div>
  <div class="row">
  <div class="field"><label>PII annual premium £</label><input id="sPiPrem" type="number" value="${s.piiAnnualPremium||0}"></div>
- <div class="field"><label>CMR income band</label><select id="sCmrBand"><option value="small" ${s.cmrIncomeBand==='small'?'selected':''}>small &lt;£60k</option><option value="medium" ${s.cmrIncomeBand==='medium'?'selected':''}>medium £60k-£500k</option><option value="large" ${s.cmrIncomeBand==='large'?'selected':''}>large £500k+</option></select></div>
+ <div class="field"><label>CMR income band</label><select id="sCmrBand"><option value="small" ${s.cmrIncomeBand==='small'?'selected':''}>small &lt;TBAk</option><option value="medium" ${s.cmrIncomeBand==='medium'?'selected':''}>medium TBA</option><option value="large" ${s.cmrIncomeBand==='large'?'selected':''}>large TBAk+</option></select></div>
  </div>
  <div class="row">
  <div class="field"><label>CMR annual fee £</label><input id="sCmrFee" type="number" value="${s.cmrAnnualFee||1500}"></div>
@@ -2463,8 +2447,7 @@ async function seedMonthlyAccruals(){
  const items=[
  {type:'PII insurance',amount:piiMonthlyAccrual(),notes:'Monthly accrual (auto)'},
  {type:'CMR fee',amount:cmrMonthlyAccrual(),notes:'Monthly accrual (auto)'},
- {type:'SRA practising fee',amount:Math.round((state.settings.profBodyAnnual||0)/12),notes:'Monthly accrual (auto)'},
- ];
+ {type:'SRA practising fee',amount:Math.round((state.settings.profBodyAnnual||0)/12),notes:'Monthly accrual (auto)'}];
  let added=0;
  for(const it of items){
  if(!it.amount)continue;
@@ -2514,8 +2497,7 @@ window.FALLCLAIMPRACTICE={
  ytd:ytdFees,mtd:mtdFees,wip:wipTotal,
  escrowHeld:escrowTotalHeld,
  liveAccrual:liveAccrualForCase,
- ask:answerQuestion,
-};
+ ask:answerQuestion};
 
 (async function boot(){
  try{

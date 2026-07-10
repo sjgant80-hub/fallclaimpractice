@@ -17,7 +17,7 @@ What you get:
 - **Success-fee accrual register** — memo accruals for every active CFA: estimated WIP × success-fee %. Auto-realised on `case.settled` (won), reversed on lost.
 - **ATE insurance** — per-case policies, premiums, claim status, recovery on win.
 - **FCA CMR fees** — annual fee tracking + next due reminder + RegData half-yearly window.
-- **PII** — claims firms need ~£2M (CMR) / £3M (SRA). Track policy, expiry, monthly accrual. Amber 60d, red 30d.
+- **PII** — claims firms need ~TBAM (CMR) / TBAM (SRA). Track policy, expiry, monthly accrual. Amber 60d, red 30d.
 - **Complaints register** — every complaint logged with FOS escalation, learning, annual summary export. Required by FCA CMR and SRA.
 - **Per-adviser P&L** — fees by type, billable hours, case load, settlement rate, average case value.
 - **Firm P&L** — revenue · expenses (salaries, PII, CMR fees, ATE premiums, court fees, expert fees, lead-gen, premises, software) · net.
