@@ -2360,7 +2360,7 @@ function viewQA(){
  </div>
  </div>`;
 }
-function formatBotText(t){return esc(t).replace(/\*\*([^*]+)\*\*/g,'<strong>TBA</strong>').replace(/`([^`]+)`/g,'<code style="background:var(--ink);padding:1px 5px;border-radius:2px;font-size:11px">TBA</code>').replace(/\n/g,'<br>')}
+function formatBotText(t){return esc(t).replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/`([^`]+)`/g,'<code style="background:var(--ink);padding:1px 5px;border-radius:2px;font-size:11px">$1</code>').replace(/\n/g,'<br>')}
 function scrollChatBottom(){const c=$('#chatScroll');if(c)c.scrollTop=c.scrollHeight}
 async function askQA(){
  const inp=$('#qInput');const q=(inp.value||'').trim();if(!q)return;
